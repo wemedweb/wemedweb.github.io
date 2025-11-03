@@ -45,8 +45,17 @@
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <div class="mouse"></div>
+        
+        <!-- 最新动态嵌入到首页底部 -->
+        <div class="hero-news-section">
+            <div class="container">
+                <h3 class="hero-news-title">
+                    <i class="fas fa-newspaper"></i> 最新动态
+                </h3>
+                <div id="heroNewsList" class="hero-news-grid">
+                    <!-- 动态列表将通过JavaScript渲染 -->
+                </div>
+            </div>
         </div>
     </section>
 
@@ -83,7 +92,7 @@
                     <div class="dept-icon">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <h3>102 - 神经科学组</h3>
+                    <h3>神经科学组</h3>
                     <p class="dept-code">Neuroscience</p>
                     <p>专注于神经退行性疾病研究，包括老年认知障碍等课题。</p>
                 </div>
@@ -91,15 +100,15 @@
                     <div class="dept-icon">
                         <i class="fas fa-disease"></i>
                     </div>
-                    <h3>109 - 肿瘤研究组</h3>
-                    <p class="dept-code">Cancer</p>
+                    <h3>肿瘤研究组</h3>
+                    <p class="dept-code">Cancer Research</p>
                     <p>开展循环肿瘤细胞(CTC)、胃癌标志物等研究项目。</p>
                 </div>
                 <div class="dept-card">
                     <div class="dept-icon">
                         <i class="fas fa-robot"></i>
                     </div>
-                    <h3>106 - AI药物设计组</h3>
+                    <h3>AI药物设计组</h3>
                     <p class="dept-code">AI Drug Design</p>
                     <p>利用人工智能技术加速小分子药物研发创新。</p>
                 </div>
@@ -107,16 +116,16 @@
                     <div class="dept-icon">
                         <i class="fas fa-water"></i>
                     </div>
-                    <h3>103 - 污水病原体组</h3>
-                    <p class="dept-code">WBE</p>
+                    <h3>污水病原体组</h3>
+                    <p class="dept-code">Wastewater-Based Epidemiology</p>
                     <p>基于污水的流行病学监测，构建病原体预警系统。</p>
                 </div>
                 <div class="dept-card">
                     <div class="dept-icon">
                         <i class="fas fa-clinic-medical"></i>
                     </div>
-                    <h3>101 - 临床组</h3>
-                    <p class="dept-code">Clinic</p>
+                    <h3>临床组</h3>
+                    <p class="dept-code">Clinical Research</p>
                     <p>推进临床转化研究，实现科研成果的临床应用。</p>
                 </div>
                 <div class="dept-card">
@@ -139,12 +148,12 @@
             <!-- 部门过滤器 -->
             <div class="team-filters">
                 <button class="filter-btn active" data-filter="all">全部成员</button>
-                <button class="filter-btn" data-filter="leader">负责人</button>
-                <button class="filter-btn" data-filter="102">神经科学组</button>
-                <button class="filter-btn" data-filter="109">肿瘤研究组</button>
-                <button class="filter-btn" data-filter="106">AI药物设计组</button>
-                <button class="filter-btn" data-filter="103">污水病原体组</button>
-                <button class="filter-btn" data-filter="101">临床组</button>
+                <button class="filter-btn" data-filter="leader">实验室负责人</button>
+                <button class="filter-btn" data-filter="Neuroscience">神经科学组</button>
+                <button class="filter-btn" data-filter="Cancer">肿瘤研究组</button>
+                <button class="filter-btn" data-filter="AI Drug">AI药物设计组</button>
+                <button class="filter-btn" data-filter="WBE">污水病原体组</button>
+                <button class="filter-btn" data-filter="Clinic">临床组</button>
             </div>
 
             <div class="team-grid" id="teamGrid">
@@ -158,66 +167,25 @@
         <div class="container">
             <h2 class="section-title">研究成果</h2>
             <div class="achievements-stats">
-                <div class="stat-card">
-                    <i class="fas fa-file-alt"></i>
-                    <div class="stat-number" data-target="15">0</div>
-                    <p>发表论文</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-certificate"></i>
-                    <div class="stat-number" data-target="5">0</div>
-                    <p>专利成果</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-flask"></i>
-                    <div class="stat-number" data-target="20">0</div>
-                    <p>在研项目</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-users"></i>
-                    <div class="stat-number" data-target="24">0</div>
-                    <p>团队成员</p>
-                </div>
+                <!-- 统计数据将通过JavaScript动态生成 -->
             </div>
 
             <div class="achievements-highlights">
                 <h3>代表性成果</h3>
                 <div class="highlight-grid">
-                    <div class="highlight-card">
-                        <div class="highlight-tag">SCI论文</div>
-                        <h4>胃癌唾液蛋白质组学标志物研究</h4>
-                        <p>发表于 Frontiers in Molecular Biosciences (Q2, IF 3.9)</p>
-                        <p class="highlight-author">张晨灏 等</p>
-                    </div>
-                    <div class="highlight-card">
-                        <div class="highlight-tag">专利</div>
-                        <h4>适用于多口径接口的真空泵</h4>
-                        <p>专利号：ZL202322865413.3</p>
-                        <p class="highlight-author">张晨灏 等</p>
-                    </div>
-                    <div class="highlight-card">
-                        <div class="highlight-tag">综述</div>
-                        <h4>AI驱动的药物开发创新</h4>
-                        <p>发表于《药理学前沿》期刊</p>
-                        <p class="highlight-author">刘丁荧 等</p>
-                    </div>
-                    <div class="highlight-card">
-                        <div class="highlight-tag">软件著作权</div>
-                        <h4>生物样本采集系统V1.0</h4>
-                        <p>登记号：2024SR0335218</p>
-                        <p class="highlight-author">张晨灏 等</p>
-                    </div>
+                    <!-- 代表性成果将通过JavaScript动态生成 -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 联系我们 -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">联系我们</h2>
-            <div class="contact-content">
-                <div class="contact-info">
+<!-- 联系我们 -->
+<section id="contact" class="contact">
+    <div class="container">
+        <h2 class="section-title">联系我们</h2>
+        <div class="contact-content-simple">
+            <div class="contact-info-split">
+                <div class="contact-left">
                     <div class="info-item">
                         <i class="fas fa-envelope"></i>
                         <div>
@@ -229,26 +197,29 @@
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
                             <h4>地址</h4>
-                            <p>深圳市技术大学</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-globe"></i>
-                        <div>
-                            <h4>网站</h4>
-                            <p>www.wemed.store</p>
+                            <p>广东省深圳市坪山区兰田路3002号</p>
+                            <p>深圳技术大学</p>
                         </div>
                     </div>
                 </div>
-                <div class="contact-map">
-                    <div class="map-placeholder">
-                        <i class="fas fa-map"></i>
-                        <p>实验室位置</p>
+                <div class="contact-right">
+                    <div class="wechat-card">
+                        <i class="fab fa-weixin"></i>
+                        <h4>微信公众号</h4>
+                        <p class="wechat-name">未美科技</p>
+                        <div class="qr-code-container">
+                            <img src="img/wechat-qr.png" alt="微信公众号二维码" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="qr-placeholder" style="display: none;">
+                                <i class="fas fa-qrcode"></i>
+                                <p>扫码关注</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- 页脚 -->
     <footer class="footer">
@@ -268,12 +239,9 @@
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>关注我们</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-weixin"></i></a>
-                        <a href="#"><i class="fab fa-weibo"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
+                    <h4>联系方式</h4>
+                    <p><i class="fas fa-envelope"></i> contact@wemed.store</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 深圳技术大学</p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -283,6 +251,7 @@
     </footer>
 
     <script src="js/data.js"></script>
+    <script src="js/achievements-data.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
