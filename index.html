@@ -218,6 +218,28 @@
         </div>
     </footer>
 
+    <!-- 异步加载背景图片 - 必须放在最前面 -->
+    <script>
+        (function() {
+            const heroSection = document.querySelector('.hero');
+            if (!heroSection) return;
+            
+            const bgImage = new Image();
+            
+            bgImage.onload = function() {
+                heroSection.classList.add('bg-loaded');
+                console.log('✅ 背景图片加载成功');
+            };
+            
+            bgImage.onerror = function() {
+                console.warn('⚠️ 背景图片加载失败，使用渐变背景');
+            };
+            
+            // 开始加载图片
+            bgImage.src = 'img/backgroud.png';
+        })();
+    </script>
+
     <script src="js/i18n.js"></script>
     <script src="js/data.js"></script>
     <script src="js/achievements-data.js"></script>

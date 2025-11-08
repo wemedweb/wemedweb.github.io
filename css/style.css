@@ -118,15 +118,24 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Hero Section */
+/* Hero Section - 异步加载背景图片 */
 .hero {
     position: relative;
     height: auto;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: url('../img/backgroud.png') center/cover no-repeat;
+    /* 默认使用渐变背景 */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     overflow: visible;
+}
+
+/* 背景图片加载完成后应用 */
+.hero.bg-loaded {
+    background-image: url('../img/backgroud.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .hero::before {
@@ -136,7 +145,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(102, 126, 234, 0.6);  /* 半透明蓝紫色遮罩，可调整透明度 */
+    background: rgba(102, 126, 234, 0.6);
     pointer-events: none;
     z-index: 0;
 }
