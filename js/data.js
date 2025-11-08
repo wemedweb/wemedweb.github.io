@@ -1,4 +1,6 @@
-// 团队成员数据
+// data.js - 团队成员数据（中英文）
+
+// 中文团队成员数据
 const teamMembers = [
     {
         name: "黄飞娟",
@@ -295,5 +297,305 @@ const teamMembers = [
         introduction: "AI药物设计组成员，参与人工智能药物设计相关研究。",
         achievements: "",
         responsibilities: "参与AI药物设计相关研究"
+    }
+];
+
+// 英文团队成员数据
+const teamMembersEn = [
+    {
+        name: "Huang Feijuan",
+        position: "Laboratory Director",
+        department: "Laboratory Leaders",
+        departments: ["Laboratory Leaders", "Project Department", "Resource Department", "Clinical Group"],
+        email: "huangfeijuan@wemed.store",
+        image: "img/huangfeijuan.jpg",
+        education: "Ph.D., University of Hong Kong, Chemical Biology",
+        introduction: "Dr. Huang Feijuan graduated from the University of Hong Kong with a Ph.D. She is a Shenzhen Overseas High-level Talent (Class C) and Futian Talent (Class B). Her research focuses on clinical molecular diagnostics, AI drug design, drug GCP, and digital innovation governance in biomedicine. She is proficient in AI drug design algorithms, public health infectious disease control, proteomics mass spectrometry, multi-omics, bioinformatics, and NMR structural analysis. She currently leads 8 national, provincial, and municipal projects with total funding of 5.2 million RMB. She has published over 30 academic papers, including 16 SCI papers and 11 first-author EI papers. She has received the Second Prize of Guangdong Science and Technology Progress Award, First Prize of China Association of Integrated Traditional and Western Medicine, First Prize of International Society for Digital Medicine, and first place in Futian District at Shenzhen Innovation and Entrepreneurship Competition.",
+        achievements: `Published over 30 academic papers (16 SCI, 11 EI first-author)
+Leading 8 national/provincial/municipal projects (total funding: 5.2M RMB)
+Second Prize, Guangdong Science and Technology Progress Award
+First Prize, China Association of Integrated Traditional and Western Medicine
+First Prize, International Society for Digital Medicine
+First Place, Shenzhen Innovation Competition (Futian District)
+15 authorized invention patents
+2 software copyrights`,
+        responsibilities: "Overall research planning, project application and management, academic exchange and cooperation"
+    },
+    {
+        name: "Cai Yuanzhe",
+        position: "Laboratory Director",
+        department: "Laboratory Leaders",
+        departments: ["Laboratory Leaders", "Competition Department"],
+        email: "caiyuanzhe@sztu.edu.cn",
+        image: "img/第6题_蔡元哲_20251010_蔡元哲-照片_1.jpg",
+        education: "Ph.D., University of Texas at Arlington, Computer Science",
+        introduction: "Dr. Cai Yuanzhe holds a Ph.D. in Computer Science from the University of Texas at Arlington and is an expert in big data algorithms. His research focuses on machine learning, bioinformatics algorithms, and big data analysis. He has published 18 papers at top international conferences such as SIGIR, ICDM, WSDM, VLDB, with 11 as first author or corresponding author. He previously worked at Teradata in Silicon Valley on big data algorithm design and development, leading the design of lasso-based generalized linear regression algorithms and randomized PCA algorithms. After returning to China, he worked at Alibaba on unstructured data analysis. He is currently an Assistant Professor at Shenzhen Technology University, conducting bioinformatics research.",
+        achievements: `Published 18 papers (11 as first/corresponding author)
+Leading 7 projects (1 provincial, 2 municipal, 2 industry, 2 university-level)
+9 authorized invention patents
+2 utility model patents
+1 software copyright
+Third Prize, Shenzhen Innovation Competition
+Gold Award, 14th Challenge Cup Guangdong Province (advisor)`,
+        responsibilities: "Wastewater pathogen monitoring, bioinformatics algorithm research, student competition guidance"
+    },
+    {
+        name: "Liu Jieren",
+        position: "Project Department Head",
+        department: "Project Department",
+        departments: ["Project Department"],
+        email: "liujierenxy@126.com",
+        image: "img/第6题_刘洁人_20251010_报名照片_1.jpg",
+        education: "Ph.D., Shenzhen Technology University",
+        introduction: "Head of Project Department, responsible for laboratory project application and management, coordinating research progress across groups, and promoting research outcome transformation.",
+        achievements: "",
+        responsibilities: "Project application, project management and coordination"
+    },
+    {
+        name: "Zaid Chachar",
+        position: "Core Researcher",
+        department: "Multi-omics Research",
+        departments: ["Neuroscience", "Cancer Research", "WBE"],
+        email: "zaid@wemed.store",
+        image: "img/zaid.png",
+        education: "Ph.D., Chinese Academy of Agricultural Sciences; M.S., B.S., Sindh Agriculture University, Pakistan",
+        introduction: "Dr. Zaid Chachar's core research areas include biochemistry, molecular biology, and biotechnology. He received his Ph.D. from the Chinese Academy of Agricultural Sciences, with M.S. and B.S. degrees from Sindh Agriculture University, Pakistan. He leads wastewater virus detection (>80% accuracy), maize drought research (>99% accuracy), and maize cadmium GWAS studies (>90% accuracy). He is proficient in PCR, CRISPR gene editing, and RNA-seq technologies.",
+        achievements: `Published 25 papers (total IF: 100.9, h-index: 12)
+1 plant germination gene patent
+Reviewer for Elsevier and Springer Nature
+Wastewater virus detection accuracy >80%
+Maize drought research accuracy >99%
+Maize cadmium GWAS accuracy >90%`,
+        responsibilities: "Multi-omics data analysis, bioinformatics research, wastewater pathogen detection technology development"
+    },
+    {
+        name: "Luo Kaixin",
+        position: "AI Drug Design Group Leader",
+        department: "AI Drug Design",
+        departments: ["Resource Department", "AI Drug Design"],
+        email: "lantianyuuuuu@iCloud.com",
+        image: "img/第6题_罗开心_20251010_7559443183776817452_1.jpeg",
+        education: "B.S., Shenzhen Technology University",
+        introduction: "Leader of AI Drug Design Group, focusing on artificial intelligence applications in drug design and small molecule traditional Chinese medicine platform reviews.",
+        achievements: "Participated in AI drug design research projects, published reviews on small molecule TCM platforms",
+        responsibilities: "Leading AI drug design research, developing AI-based drug design algorithms"
+    },
+    {
+        name: "Li Boyue",
+        position: "Cancer Research Group Leader",
+        department: "Cancer Research",
+        departments: ["Editorial Department", "Project Department", "Cancer Research"],
+        email: "liboyueby@163.com",
+        image: "img/第6题_李泊樾_20251010_7559570684117679129_1.jpeg",
+        education: "M.S., Hong Kong Baptist University, Traditional Chinese Medicine; Technician, Shenzhen Bay Laboratory",
+        introduction: "Leader of Cancer Research Group with background in traditional Chinese medicine and laboratory experience, responsible for cancer-related research and team management.",
+        achievements: "",
+        responsibilities: "Cancer research group management, team coordination, project management"
+    },
+    {
+        name: "Lu Sien",
+        position: "Wastewater Pathogen Group Leader",
+        department: "WBE",
+        departments: ["Editorial Department", "WBE"],
+        email: "2906508030@qq.com",
+        image: "img/第6题_卢思恩_20251010_微信图片_20251010201454_363_14_1.jpg",
+        education: "B.S., Shenzhen Technology University, Data Science and Big Data Technology",
+        introduction: "Leader of Wastewater Pathogen Group, responsible for overall planning and implementation of wastewater pathogen monitoring projects.",
+        achievements: "Published conference papers on foot-and-mouth disease and ICEEI",
+        responsibilities: "Wastewater pathogen group research and team management"
+    },
+    {
+        name: "Zhang Chenhao",
+        position: "WBE Technical Leader",
+        department: "WBE",
+        departments: ["Competition Department", "WBE"],
+        email: "chzhang@wemed.store",
+        image: "img/第6题_张晨灏_20251010_图片1_1.png",
+        education: "B.S., Shenzhen Technology University",
+        introduction: "Technical Leader of Wastewater Pathogen Group, interned at WeMed Laboratory for two years (March 2023 - September 2025), responsible for WBE development projects, leading a team of 20, overseeing the entire wastewater pathogen detection process.",
+        achievements: `Published multiple SCI papers
+Authorized utility model patents
+Software copyrights`,
+        responsibilities: "Full-process wastewater pathogen detection technology development and team management"
+    },
+    {
+        name: "Chen Zixian",
+        position: "Clinical Group Leader",
+        department: "Clinical",
+        departments: ["Competition Department", "Clinic"],
+        email: "chenzixian@wemed.store",
+        image: "img/第6题_陈梓娴_20251010_7559421815704428852_1.jpeg",
+        education: "M.S., City University of Hong Kong",
+        introduction: "Leader of Clinical Group, responsible for gastric cancer research and clinical translation work.",
+        achievements: "",
+        responsibilities: "Gastric cancer project research, competition department coordination"
+    },
+    {
+        name: "Huang Qiongzhen",
+        position: "Clinical Group Member",
+        department: "Clinical",
+        departments: ["Project Department", "Resource Department", "Clinic"],
+        email: "huangqiongzhen@wemed.store",
+        image: "img/第6题_黄琼真_20251010_IMG_20251010_104740_1.jpg",
+        education: "B.S., Guangdong Pharmaceutical University, Preventive Medicine (2008-2013)",
+        introduction: "Clinical Group member, responsible for coordinating project and resource departments.",
+        achievements: "",
+        responsibilities: "Project and resource department coordination"
+    },
+    {
+        name: "He Lianyi",
+        position: "Neuroscience Group Member",
+        department: "Neuroscience",
+        departments: ["Project Department", "Neuroscience"],
+        email: "helianyi@wemed.store",
+        image: "img/第6题_何连毅_20251009_7fab64327a1aa935a71dfc1a72378e6a_compress_1.jpg",
+        education: "Undergraduate",
+        introduction: "Neuroscience Group member, participating in neurodegenerative disease research.",
+        achievements: "",
+        responsibilities: "Neuroscience-related research"
+    },
+    {
+        name: "Shang Xiaochen",
+        position: "Neuroscience Group Member",
+        department: "Neuroscience",
+        departments: ["Resource Department", "Competition Department", "Neuroscience"],
+        email: "9103121@qq.com",
+        image: "img/第6题_尚晓晨_20251010_WechatIMG30_1.jpg",
+        education: "Associate Degree, China Central Radio and TV University, Law",
+        introduction: "Neuroscience Group member, responsible for HR and financial administrative management.",
+        achievements: "",
+        responsibilities: "HR and financial management"
+    },
+    {
+        name: "Liu Dingying",
+        position: "Neuroscience Group Member",
+        department: "Neuroscience",
+        departments: ["Neuroscience"],
+        email: "202401102022@stumail.sztu.edu.cn",
+        image: "img/第6题_刘丁荧_20251010_5cf12cd04fcebc58b3fdbcb093d41aa2_compress_1.jpg",
+        education: "B.S., Shenzhen Technology University (2024.9-present)",
+        introduction: "Neuroscience Group member, responsible for elderly cognition-related research.",
+        achievements: "Published as third author in September 2025: 'AI-driven pilot platforms and computational pharmacology: Accelerating small molecule drug development innovation under Industry 4.0 and 5.0 paradigms' in Frontiers in Pharmacology",
+        responsibilities: "Hong Kong-Macau-Taiwan project on elderly cognition, Tianma Gouteng Yin research papers and patents"
+    },
+    {
+        name: "Madiha Fatima",
+        position: "Core Researcher",
+        department: "Multidisciplinary Research",
+        departments: ["Project Department", "Neuroscience", "Cancer Research"],
+        email: "madiha.fatima123@outlook.com",
+        image: "img/第6题_Madiha_20251010_Madiha photo_1.jpg",
+        education: "Ph.D., Postdoctoral",
+        introduction: "Core researcher with extensive research experience, participating in multiple interdisciplinary research projects.",
+        achievements: "Published multiple academic papers",
+        responsibilities: "Project design and research guidance"
+    },
+    {
+        name: "Li Haohui",
+        position: "Software Department Member",
+        department: "Software",
+        departments: ["Software"],
+        email: "lihaohui@wemed.store",
+        image: "img/第6题_李浩珲_20251009_a2d8c9ab6c7473303c7e17f26a80c65_1.png",
+        education: "B.S., Shenzhen Technology University, Computer Science and Technology (Sophomore)",
+        introduction: "Software Department member, responsible for laboratory software system development and maintenance.",
+        achievements: "Participated in educational management system development",
+        responsibilities: "Laboratory software development and technical support"
+    },
+    {
+        name: "Xu Jiali",
+        position: "WBE Group Member",
+        department: "WBE",
+        departments: ["WBE"],
+        email: "3531259739@qq.com",
+        image: "img/第6题_徐嘉丽_20251010_7559521777587299616_1.jpeg",
+        education: "B.S., Shenzhen Technology University (2023-2027)",
+        introduction: "Wastewater Pathogen Group member, participating in wastewater pathogen monitoring research.",
+        achievements: "",
+        responsibilities: "Wastewater pathogen group research"
+    },
+    {
+        name: "Zhang Zichen",
+        position: "WBE Group Member",
+        department: "WBE",
+        departments: ["WBE"],
+        email: "957051145@qq.com",
+        image: "img/第6题_张子宸_20251010_7559522232132385797_1.jpeg",
+        education: "B.S., Shenzhen Technology University, Pharmacy (Class of 2024)",
+        introduction: "Wastewater Pathogen Group member, conducting real pathogen identification research.",
+        achievements: "",
+        responsibilities: "Real pathogen identification research"
+    },
+    {
+        name: "Zhao Zisen",
+        position: "WBE Group Member",
+        department: "WBE",
+        departments: ["WBE"],
+        email: "2783055381@qq.com",
+        image: "img/第6题_赵梓森_20251010_7559531225944974413_1.jpeg",
+        education: "Undergraduate",
+        introduction: "Wastewater Pathogen Group member, participating in paper and grant writing.",
+        achievements: "Participated in paper and grant writing",
+        responsibilities: "Wastewater integrated machine research"
+    },
+    {
+        name: "Chen Yanyu",
+        position: "WBE Group Member",
+        department: "WBE",
+        departments: ["WBE"],
+        email: "476532339@qq.com",
+        image: "img/第6题_陈彦羽_20251010_微信图片_20240924134931_1.jpg",
+        education: "B.S., Shenzhen Technology University",
+        introduction: "Wastewater Pathogen Group member, participating in wastewater pathogen research.",
+        achievements: "",
+        responsibilities: "Wastewater pathogen group research"
+    },
+    {
+        name: "Mo Jimao",
+        position: "Cancer Research Group Member",
+        department: "Cancer Research",
+        departments: ["Editorial Department", "Cancer Research"],
+        email: "yaom7917@gmail.com",
+        image: "img/第6题_莫济懋_20251010_fa2bd4040e4336b003424173ee534148_origin_1.jpg",
+        education: "B.S., Shenzhen Technology University",
+        introduction: "Cancer Research Group member, responsible for multiple cancer-related research projects.",
+        achievements: "Participated in publishing 'ITRAQ and PRM-based quantitative saliva proteomics in gastric cancer: biomarker discovery'",
+        responsibilities: "CTC circulating tumor cell research, large model evaluation, AIDD future development prediction"
+    },
+    {
+        name: "Song Yiyang",
+        position: "Cancer Research Group Member",
+        department: "Cancer Research",
+        departments: ["Cancer Research"],
+        email: "353561980@qq.com",
+        image: "img/第6题_宋伊扬_20251010_7559439571754106008_1.jpeg",
+        education: "Undergraduate",
+        introduction: "Cancer Research Group member, participating in cancer-related research.",
+        achievements: "",
+        responsibilities: "Cancer research group work, meeting records and management"
+    },
+    {
+        name: "Xu Peitao",
+        position: "Cancer Research Group Member",
+        department: "Cancer Research",
+        departments: ["Cancer Research"],
+        email: "1920837078@qq.com",
+        image: "img/第6题_许培涛_20251010_微信图片_20240819124759_1.jpg",
+        education: "B.S., Shenzhen Technology University (2024-2028)",
+        introduction: "Cancer Research Group member, participating in cancer-related research.",
+        achievements: "",
+        responsibilities: "Cancer research related work"
+    },
+    {
+        name: "Hong Jingmin",
+        position: "AI Drug Design Group Member",
+        department: "AI Drug Design",
+        departments: ["AI Drug Design"],
+        email: "hjm1474996@qq.com",
+        image: "img/第6题_洪静敏_20251010_62739d1362d791390c1eb0af22823e8e_compress_1.jpg",
+        education: "B.S., Shenzhen Technology University",
+        introduction: "AI Drug Design Group member, participating in AI drug design research.",
+        achievements: "",
+        responsibilities: "AI drug design research"
     }
 ];

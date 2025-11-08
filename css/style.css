@@ -121,11 +121,13 @@ body {
 /* Hero Section */
 .hero {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;  /* 改为 min-height，确保内容完全显示 */
+    height: auto;  /* 添加这行 */
     display: flex;
     flex-direction: column;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    overflow: hidden;
+    overflow: visible;  /* 改为 visible，允许内容溢出显示 */
+    padding-bottom: 0;  /* 确保没有额外的底部内边距 */
 }
 
 .hero-overlay {
@@ -232,13 +234,13 @@ body {
 .hero-news-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
+    gap: 1.5rem;
 }
 
 .hero-news-item {
     display: flex;
     gap: 1rem;
-    padding: 1.2rem;
+    padding: 1.5rem;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 12px;
@@ -246,12 +248,16 @@ body {
     transition: all 0.3s ease;
     animation: slideInRight 0.6s ease-out forwards;
     opacity: 0;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
 }
 
 .hero-news-item:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     background: white;
+    z-index: 2;
 }
 
 .hero-news-date {
@@ -281,6 +287,8 @@ body {
 .hero-news-info {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .hero-news-info h4 {
@@ -298,18 +306,20 @@ body {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin-bottom: 0.5rem;
 }
 
 .hero-news-link {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    margin-top: 0.5rem;
+    margin-top: auto;
     color: var(--primary-color);
     font-weight: 500;
     text-decoration: none;
     font-size: 0.85rem;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .hero-news-link:hover {
@@ -913,33 +923,6 @@ body {
     margin: 0;
 }
 
-/* 响应式设计 */
-@media (max-width: 992px) {
-    .contact-info-split {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .contact-left {
-        order: 1;
-    }
-    
-    .contact-right {
-        order: 2;
-    }
-}
-
-@media (max-width: 768px) {
-    .wechat-card {
-        padding: 2rem 1.5rem;
-    }
-    
-    .qr-code-container {
-        width: 160px;
-        height: 160px;
-    }
-}
-
 /* 微信公众号卡片样式 */
 .wechat-item .qr-placeholder {
     margin-top: 1rem;
@@ -1024,14 +1007,152 @@ body {
     color: rgba(255, 255, 255, 0.5);
 }
 
+/* ==================== 
+   公告栏样式
+   ==================== */
+.announcement-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    z-index: 1001;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.announcement-bar.show {
+    transform: translateY(0);
+}
+
+.announcement-content {
+    display: flex;
+    align-items: center;
+    padding: 12px 60px 12px 20px;
+    gap: 12px;
+    position: relative;
+}
+
+.announcement-content i.fa-bullhorn {
+    font-size: 1.2rem;
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.announcement-text {
+    flex: 1;
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.announcement-link {
+    color: white;
+    text-decoration: underline;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.3s ease;
+    margin-left: 8px;
+}
+
+.announcement-link:hover {
+    opacity: 0.8;
+}
+
+.announcement-close {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    line-height: 1;
+}
+
+.announcement-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* 当显示公告时，调整导航栏位置 */
+body.announcement-active .navbar {
+    top: 48px;
+}
+
+body.announcement-active .hero {
+    padding-top: 48px;
+}
+
+/* ==================== 
+   语言切换按钮样式
+   ==================== */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.lang-switch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(14, 165, 233, 0.3);
+}
+
+.lang-switch:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(14, 165, 233, 0.4);
+}
+
+.lang-switch i {
+    font-size: 1rem;
+}
+
 /* 响应式设计 */
 @media (max-width: 992px) {
     .hero-news-grid {
         grid-template-columns: 1fr;
+        gap: 1.2rem;
     }
     
-    .contact-info-grid {
+    .contact-info-grid,
+    .contact-info-split {
         grid-template-columns: 1fr;
+    }
+    
+    .contact-left {
+        order: 1;
+    }
+    
+    .contact-right {
+        order: 2;
     }
 }
 
@@ -1083,6 +1204,18 @@ body {
     .hero-news-section {
         padding: 20px 0 30px;
     }
+    
+    .hero-news-item {
+        padding: 1.2rem;
+    }
+    
+    .hero-news-info h4 {
+        font-size: 0.95rem;
+    }
+    
+    .hero-news-info p {
+        font-size: 0.8rem;
+    }
 
     .team-grid {
         grid-template-columns: 1fr;
@@ -1090,6 +1223,46 @@ body {
 
     .section-title {
         font-size: 2rem;
+    }
+    
+    .wechat-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .qr-code-container {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .announcement-content {
+        padding: 10px 50px 10px 15px;
+    }
+    
+    .announcement-text {
+        font-size: 0.85rem;
+    }
+    
+    .announcement-link {
+        font-size: 0.8rem;
+    }
+    
+    .announcement-close {
+        right: 10px;
+        font-size: 1rem;
+        padding: 4px 8px;
+    }
+    
+    .lang-switch {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .lang-switch i {
+        font-size: 0.9rem;
+    }
+    
+    .nav-actions {
+        gap: 10px;
     }
 }
 
@@ -1101,5 +1274,27 @@ body {
     .departments-grid,
     .highlight-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .announcement-content {
+        flex-wrap: wrap;
+        padding-right: 45px;
+    }
+    
+    .announcement-text {
+        font-size: 0.8rem;
+    }
+    
+    .announcement-link {
+        margin-left: 28px;
+        font-size: 0.75rem;
+    }
+    
+    .lang-switch span {
+        display: none;
+    }
+    
+    .lang-switch {
+        padding: 6px 10px;
     }
 }

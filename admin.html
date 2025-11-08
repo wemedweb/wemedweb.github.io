@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未美实验室 - 数据管理后台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 14px 28px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #6b7280;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .content-panel {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-header h3 {
+            color: #1f2937;
+            font-size: 18px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .modal-header h2 {
+            color: #667eea;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .close-modal:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .export-section {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .export-section h3 {
+            color: #0369a1;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .code-output {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-bottom: 15px;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .lang-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .lang-tab {
+            padding: 8px 20px;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lang-tab.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 45px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .import-section {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .import-section h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <i class="fas fa-flask"></i>
+                未美实验室数据管理后台
+            </h1>
+            <div class="header-actions">
+                <button class="btn btn-success" onclick="saveAllData()">
+                    <i class="fas fa-save"></i> 保存所有修改
+                </button>
+                <button class="btn btn-primary" onclick="exportAllCode()">
+                    <i class="fas fa-download"></i> 导出代码
+                </button>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('team')">
+                <i class="fas fa-users"></i> 团队成员管理
+            </button>
+            <button class="tab" onclick="switchTab('achievements')">
+                <i class="fas fa-trophy"></i> 研究成果管理
+            </button>
+            <button class="tab" onclick="switchTab('announcements')">
+                <i class="fas fa-bullhorn"></i> 公告管理
+            </button>
+            <button class="tab" onclick="switchTab('i18n')">
+                <i class="fas fa-language"></i> 多语言配置
+            </button>
+        </div>
+
+        <!-- 团队成员管理面板 -->
+        <div id="team-panel" class="content-panel active">
+            <div class="import-section">
+                <h3><i class="fas fa-file-import"></i> 导入现有数据</h3>
+                <p style="margin-bottom: 15px; color: #92400e;">粘贴您的 data.js 文件内容到下方文本框，点击"导入数据"按钮</p>
+                <textarea id="importDataJs" class="form-group" style="min-height: 150px; width: 100%; padding: 12px; border: 2px solid #f59e0b; border-radius: 8px;"></textarea>
+                <button class="btn btn-primary" onclick="importDataJs()">
+                    <i class="fas fa-upload"></i> 导入数据
+                </button>
+            </div>
+
+            <div class="section">
+                <h2>
+                    <i class="fas fa-users"></i>
+                    团队成员列表
+                </h2>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="teamSearch" placeholder="搜索成员姓名、职位、部门..." onkeyup="searchTeam()">
+                </div>
+
+                <button class="btn btn-primary" onclick="openAddMemberModal()">
+                    <i class="fas fa-plus"></i> 添加新成员
+                </button>
+
+                <div id="teamList" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- 研究成果管理面板 -->
+        <div id="achievements-panel" class="content-panel">
+            <div class="import-section">
+                <h3><i class="fas fa-file-import"></i> 导入现有数据</h3>
+                <p style="margin-bottom: 15px; color: #92400e;">粘贴您的 achievements-data.js 文件内容到下方文本框，点击"导入数据"按钮</p>
+                <textarea id="importAchievementsJs" class="form-group" style="min-height: 150px; width: 100%; padding: 12px; border: 2px solid #f59e0b; border-radius: 8px;"></textarea>
+                <button class="btn btn-primary" onclick="importAchievementsJs()">
+                    <i class="fas fa-upload"></i> 导入数据
+                </button>
+            </div>
+
+            <div class="section">
+                <h2>
+                    <i class="fas fa-chart-bar"></i>
+                    统计数据
+                </h2>
+                <div class="lang-tabs">
+                    <button class="lang-tab active" onclick="switchLang('stats', 'zh')">中文</button>
+                    <button class="lang-tab" onclick="switchLang('stats', 'en')">English</button>
+                </div>
+                <div id="statsForm"></div>
+            </div>
+
+            <div class="section">
+                <h2>
+                    <i class="fas fa-star"></i>
+                    代表性成果
+                </h2>
+                <div class="lang-tabs">
+                    <button class="lang-tab active" onclick="switchLang('highlight', 'zh')">中文</button>
+                    <button class="lang-tab" onclick="switchLang('highlight', 'en')">English</button>
+                </div>
+                <button class="btn btn-primary" onclick="openAddHighlightModal()">
+                    <i class="fas fa-plus"></i> 添加成果
+                </button>
+                <div id="highlightList" style="margin-top: 20px;"></div>
+            </div>
+
+            <div class="section">
+                <h2>
+                    <i class="fas fa-newspaper"></i>
+                    最新动态
+                </h2>
+                <div class="lang-tabs">
+                    <button class="lang-tab active" onclick="switchLang('news', 'zh')">中文</button>
+                    <button class="lang-tab" onclick="switchLang('news', 'en')">English</button>
+                </div>
+                <button class="btn btn-primary" onclick="openAddNewsModal()">
+                    <i class="fas fa-plus"></i> 添加动态
+                </button>
+                <div id="newsList" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- 公告管理面板 -->
+        <div id="announcements-panel" class="content-panel">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                公告支持超链接功能，可以跳转到内部页面或外部网站。留空链接字段则为普通公告。
+            </div>
+
+            <div class="section">
+                <h2>
+                    <i class="fas fa-bullhorn"></i>
+                    公告列表
+                </h2>
+                <div class="lang-tabs">
+                    <button class="lang-tab active" onclick="switchLang('announcement', 'zh')">中文</button>
+                    <button class="lang-tab" onclick="switchLang('announcement', 'en')">English</button>
+                </div>
+                <button class="btn btn-primary" onclick="openAddAnnouncementModal()">
+                    <i class="fas fa-plus"></i> 添加公告
+                </button>
+                <div id="announcementList" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- 多语言配置面板 -->
+        <div id="i18n-panel" class="content-panel">
+            <div class="import-section">
+                <h3><i class="fas fa-file-import"></i> 导入现有数据</h3>
+                <p style="margin-bottom: 15px; color: #92400e;">粘贴您的 i18n.js 文件内容到下方文本框，点击"导入数据"按钮</p>
+                <textarea id="importI18nJs" class="form-group" style="min-height: 150px; width: 100%; padding: 12px; border: 2px solid #f59e0b; border-radius: 8px;"></textarea>
+                <button class="btn btn-primary" onclick="importI18nJs()">
+                    <i class="fas fa-upload"></i> 导入数据
+                </button>
+            </div>
+
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                修改多语言配置后，请点击"保存所有修改"按钮保存更改
+            </div>
+            
+            <div class="section">
+                <h2>
+                    <i class="fas fa-cog"></i>
+                    多语言配置编辑器
+                </h2>
+                <div id="i18nEditor"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 成员编辑模态框 -->
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="memberModalTitle">添加新成员</h2>
+                <button class="close-modal" onclick="closeMemberModal()">×</button>
+            </div>
+            <form id="memberForm">
+                <div class="lang-tabs">
+                    <button type="button" class="lang-tab active" onclick="switchMemberLang('zh')">中文信息</button>
+                    <button type="button" class="lang-tab" onclick="switchMemberLang('en')">英文信息</button>
+                </div>
+
+                <div id="memberFormZh">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>姓名 *</label>
+                            <input type="text" id="memberNameZh" required>
+                        </div>
+                        <div class="form-group">
+                            <label>职位 *</label>
+                            <input type="text" id="memberPositionZh" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>所属部门（多选，用 | 分隔）*</label>
+                        <input type="text" id="memberDepartmentsZh" placeholder="例如：项目部 | 神经科学组" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>邮箱 *</label>
+                            <input type="email" id="memberEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>头像路径</label>
+                            <input type="text" id="memberImage" placeholder="img/name.jpg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>教育背景</label>
+                        <input type="text" id="memberEducationZh" placeholder="例如：博士，香港大学，化学生物学">
+                    </div>
+                    <div class="form-group">
+                        <label>个人简介</label>
+                        <textarea id="memberIntroductionZh"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>主要成果</label>
+                        <textarea id="memberAchievementsZh" placeholder="每行一项成果"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>工作职责</label>
+                        <textarea id="memberResponsibilitiesZh"></textarea>
+                    </div>
+                </div>
+
+                <div id="memberFormEn" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name *</label>
+                            <input type="text" id="memberNameEn" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Position *</label>
+                            <input type="text" id="memberPositionEn" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Departments (separated by |) *</label>
+                        <input type="text" id="memberDepartmentsEn" placeholder="e.g., Project Department | Neuroscience" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Education</label>
+                        <input type="text" id="memberEducationEn" placeholder="e.g., Ph.D., University of Hong Kong, Chemical Biology">
+                    </div>
+                    <div class="form-group">
+                        <label>Introduction</label>
+                        <textarea id="memberIntroductionEn"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Achievements</label>
+                        <textarea id="memberAchievementsEn" placeholder="One achievement per line"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Responsibilities</label>
+                        <textarea id="memberResponsibilitiesEn"></textarea>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 25px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-check"></i> 保存
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeMemberModal()" style="flex: 1;">
+                        <i class="fas fa-times"></i> 取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 成果编辑模态框 -->
+    <div id="highlightModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="highlightModalTitle">添加代表性成果</h2>
+                <button class="close-modal" onclick="closeHighlightModal()">×</button>
+            </div>
+            <form id="highlightForm">
+                <div class="lang-tabs">
+                    <button type="button" class="lang-tab active" onclick="switchHighlightLang('zh')">中文信息</button>
+                    <button type="button" class="lang-tab" onclick="switchHighlightLang('en')">英文信息</button>
+                </div>
+
+                <div id="highlightFormZh">
+                    <div class="form-group">
+                        <label>标签 *</label>
+                        <input type="text" id="highlightTagZh" placeholder="例如：SCI论文" required>
+                    </div>
+                    <div class="form-group">
+                        <label>标题 *</label>
+                        <input type="text" id="highlightTitleZh" required>
+                    </div>
+                    <div class="form-group">
+                        <label>描述</label>
+                        <textarea id="highlightDescriptionZh"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>作者</label>
+                            <input type="text" id="highlightAuthorZh" placeholder="例如：张晨灏 等">
+                        </div>
+                        <div class="form-group">
+                            <label>日期</label>
+                            <input type="text" id="highlightDateZh" placeholder="例如：2024">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="highlightFormEn" style="display: none;">
+                    <div class="form-group">
+                        <label>Tag *</label>
+                        <input type="text" id="highlightTagEn" placeholder="e.g., SCI Paper" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Title *</label>
+                        <input type="text" id="highlightTitleEn" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="highlightDescriptionEn"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Author</label>
+                            <input type="text" id="highlightAuthorEn" placeholder="e.g., Zhang Chenhao et al.">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" id="highlightDateEn" placeholder="e.g., 2024">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 25px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-check"></i> 保存
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeHighlightModal()" style="flex: 1;">
+                        <i class="fas fa-times"></i> 取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 新闻编辑模态框 -->
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="newsModalTitle">添加最新动态</h2>
+                <button class="close-modal" onclick="closeNewsModal()">×</button>
+            </div>
+            <form id="newsForm">
+                <div class="lang-tabs">
+                    <button type="button" class="lang-tab active" onclick="switchNewsLang('zh')">中文信息</button>
+                    <button type="button" class="lang-tab" onclick="switchNewsLang('en')">英文信息</button>
+                </div>
+
+                <div id="newsFormZh">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>日期（日）*</label>
+                            <input type="text" id="newsDateDayZh" placeholder="例如：21" required>
+                        </div>
+                        <div class="form-group">
+                            <label>日期（月）*</label>
+                            <input type="text" id="newsDateMonthZh" placeholder="例如：7月" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>标题 *</label>
+                        <input type="text" id="newsTitleZh" required>
+                    </div>
+                    <div class="form-group">
+                        <label>描述</label>
+                        <textarea id="newsDescriptionZh"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>链接</label>
+                        <input type="url" id="newsLink" placeholder="https://example.com">
+                    </div>
+                </div>
+
+                <div id="newsFormEn" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date (Day) *</label>
+                            <input type="text" id="newsDateDayEn" placeholder="e.g., 21" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date (Month) *</label>
+                            <input type="text" id="newsDateMonthEn" placeholder="e.g., Jul" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Title *</label>
+                        <input type="text" id="newsTitleEn" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="newsDescriptionEn"></textarea>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 25px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-check"></i> 保存
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeNewsModal()" style="flex: 1;">
+                        <i class="fas fa-times"></i> 取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 公告编辑模态框 -->
+    <div id="announcementModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="announcementModalTitle">添加公告</h2>
+                <button class="close-modal" onclick="closeAnnouncementModal()">×</button>
+            </div>
+            <form id="announcementForm">
+                <div class="lang-tabs">
+                    <button type="button" class="lang-tab active" onclick="switchAnnouncementLang('zh')">中文信息</button>
+                    <button type="button" class="lang-tab" onclick="switchAnnouncementLang('en')">英文信息</button>
+                </div>
+
+                <div id="announcementFormZh">
+                    <div class="form-group">
+                        <label>公告内容 *</label>
+                        <input type="text" id="announcementTextZh" placeholder="例如：🎉 实验室官网全新上线！" required>
+                    </div>
+                    <div class="form-group">
+                        <label>链接地址（可选）</label>
+                        <input type="text" id="announcementLinkZh" placeholder="例如：about.html 或 https://example.com">
+                        <small style="color: #6b7280; margin-top: 5px; display: block;">留空则为普通公告，填写则可点击跳转</small>
+                    </div>
+                    <div class="form-group">
+                        <label>链接文字（可选）</label>
+                        <input type="text" id="announcementLinkTextZh" placeholder="例如：了解更多、查看详情">
+                        <small style="color: #6b7280; margin-top: 5px; display: block;">不填写将显示默认文字"查看详情"</small>
+                    </div>
+                </div>
+
+                <div id="announcementFormEn" style="display: none;">
+                    <div class="form-group">
+                        <label>Announcement Text *</label>
+                        <input type="text" id="announcementTextEn" placeholder="e.g., 🎉 Welcome to Our New Website!" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Link URL (Optional)</label>
+                        <input type="text" id="announcementLinkEn" placeholder="e.g., about.html or https://example.com">
+                        <small style="color: #6b7280; margin-top: 5px; display: block;">Leave blank for regular announcement</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Link Text (Optional)</label>
+                        <input type="text" id="announcementLinkTextEn" placeholder="e.g., Learn More, View Details">
+                        <small style="color: #6b7280; margin-top: 5px; display: block;">Default: "View Details"</small>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 25px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-check"></i> 保存
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAnnouncementModal()" style="flex: 1;">
+                        <i class="fas fa-times"></i> 取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 代码导出模态框 -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h2>导出代码</h2>
+                <button class="close-modal" onclick="closeExportModal()">×</button>
+            </div>
+            <div class="export-section">
+                <h3><i class="fas fa-file-code"></i> data.js</h3>
+                <div class="code-output" id="dataJsOutput"></div>
+                <button class="btn btn-primary" onclick="copyCode('dataJsOutput')">
+                    <i class="fas fa-copy"></i> 复制代码
+                </button>
+            </div>
+            <div class="export-section">
+                <h3><i class="fas fa-file-code"></i> achievements-data.js</h3>
+                <div class="code-output" id="achievementsJsOutput"></div>
+                <button class="btn btn-primary" onclick="copyCode('achievementsJsOutput')">
+                    <i class="fas fa-copy"></i> 复制代码
+                </button>
+            </div>
+            <div class="export-section">
+                <h3><i class="fas fa-file-code"></i> i18n.js</h3>
+                <div class="code-output" id="i18nJsOutput"></div>
+                <button class="btn btn-primary" onclick="copyCode('i18nJsOutput')">
+                    <i class="fas fa-copy"></i> 复制代码
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 数据存储
+        let teamMembersData = {
+            zh: [],
+            en: []
+        };
+
+        let achievementsData = {
+            stats: { zh: {}, en: {} },
+            highlights: { zh: [], en: [] },
+            news: { zh: [], en: [] }
+        };
+
+        let announcementsData = {
+            zh: [],
+            en: []
+        };
+
+        let i18nData = {
+            zh: {},
+            en: {}
+        };
+
+        let currentEditingMember = null;
+        let currentEditingHighlight = null;
+        let currentEditingNews = null;
+        let currentEditingAnnouncement = null;
+        
+        let currentLang = {
+            stats: 'zh',
+            highlight: 'zh',
+            news: 'zh',
+            announcement: 'zh'
+        };
+
+        // 初始化
+        function init() {
+            loadSampleData();
+            renderTeamList();
+            renderStatsForm();
+            renderHighlightList();
+            renderNewsList();
+            renderAnnouncementList();
+            renderI18nEditor();
+        }
+
+        // 加载示例数据
+        function loadSampleData() {
+            // 团队成员示例数据
+            teamMembersData.zh = [{
+                name: "示例成员",
+                position: "示例职位",
+                departments: ["项目部"],
+                email: "example@wemed.store",
+                image: "",
+                education: "",
+                introduction: "",
+                achievements: "",
+                responsibilities: ""
+            }];
+
+            teamMembersData.en = [{
+                name: "Example Member",
+                position: "Example Position",
+                departments: ["Project Department"],
+                email: "example@wemed.store",
+                image: "",
+                education: "",
+                introduction: "",
+                achievements: "",
+                responsibilities: ""
+            }];
+
+            // 统计数据
+            achievementsData.stats.zh = {
+                papers: { value: 0, label: "发表论文", icon: "fa-file-alt", detail: "" },
+                patents: { value: 0, label: "专利成果", icon: "fa-certificate", detail: "" },
+                projects: { value: 0, label: "在研项目", icon: "fa-flask", detail: "" },
+                members: { value: 0, label: "团队成员", icon: "fa-users", detail: "" }
+            };
+
+            achievementsData.stats.en = {
+                papers: { value: 0, label: "Papers", icon: "fa-file-alt", detail: "" },
+                patents: { value: 0, label: "Patents", icon: "fa-certificate", detail: "" },
+                projects: { value: 0, label: "Projects", icon: "fa-flask", detail: "" },
+                members: { value: 0, label: "Members", icon: "fa-users", detail: "" }
+            };
+
+            // 公告示例数据
+            announcementsData.zh = [
+                {
+                    text: "🎉 实验室官网全新上线！",
+                    link: "about.html",
+                    linkText: "了解更多"
+                }
+            ];
+
+            announcementsData.en = [
+                {
+                    text: "🎉 Welcome to Our New Website!",
+                    link: "about.html",
+                    linkText: "Learn More"
+                }
+            ];
+
+            // i18n配置
+            i18nData = {
+                zh: {
+                    nav: {
+                        home: "首页",
+                        about: "关于我们"
+                    }
+                },
+                en: {
+                    nav: {
+                        home: "Home",
+                        about: "About"
+                    }
+                }
+            };
+        }
+
+        // 导入 achievements-data.js
+        function importAchievementsJs() {
+            const content = document.getElementById('importAchievementsJs').value;
+            try {
+                // 提取统计数据
+                const statsMatch = content.match(/const\s+achievementsStats\s*=\s*(\{[\s\S]*?\});/);
+                const statsEnMatch = content.match(/const\s+achievementsStatsEn\s*=\s*(\{[\s\S]*?\});/);
+                
+                if (statsMatch) {
+                    achievementsData.stats.zh = eval('(' + statsMatch[1] + ')');
+                }
+                if (statsEnMatch) {
+                    achievementsData.stats.en = eval('(' + statsEnMatch[1] + ')');
+                }
+
+                // 提取代表性成果
+                const highlightsMatch = content.match(/const\s+highlightAchievements\s*=\s*(\[[\s\S]*?\]);/);
+                const highlightsEnMatch = content.match(/const\s+highlightAchievementsEn\s*=\s*(\[[\s\S]*?\]);/);
+                
+                if (highlightsMatch) {
+                    achievementsData.highlights.zh = eval(highlightsMatch[1]);
+                }
+                if (highlightsEnMatch) {
+                    achievementsData.highlights.en = eval(highlightsEnMatch[1]);
+                }
+
+                // 提取新闻动态
+                const newsMatch = content.match(/const\s+newsArticles\s*=\s*(\[[\s\S]*?\]);/);
+                const newsEnMatch = content.match(/const\s+newsArticlesEn\s*=\s*(\[[\s\S]*?\]);/);
+                
+                if (newsMatch) {
+                    achievementsData.news.zh = eval(newsMatch[1]);
+                }
+                if (newsEnMatch) {
+                    achievementsData.news.en = eval(newsEnMatch[1]);
+                }
+
+                // 提取公告数据
+                const announcementsMatch = content.match(/const\s+announcements\s*=\s*(\[[\s\S]*?\]);/);
+                const announcementsEnMatch = content.match(/const\s+announcementsEn\s*=\s*(\[[\s\S]*?\]);/);
+                
+                if (announcementsMatch) {
+                    announcementsData.zh = eval(announcementsMatch[1]);
+                }
+                if (announcementsEnMatch) {
+                    announcementsData.en = eval(announcementsEnMatch[1]);
+                }
+                
+                renderStatsForm();
+                renderHighlightList();
+                renderNewsList();
+                renderAnnouncementList();
+                alert('数据导入成功！');
+            } catch (e) {
+                alert('导入失败：' + e.message);
+            }
+        }
+
+        // 导入 data.js
+        function importDataJs() {
+            const content = document.getElementById('importDataJs').value;
+            try {
+                const teamMembersMatch = content.match(/const\s+teamMembers\s*=\s*(\[[\s\S]*?\]);/);
+                const teamMembersEnMatch = content.match(/const\s+teamMembersEn\s*=\s*(\[[\s\S]*?\]);/);
+                
+                if (teamMembersMatch) {
+                    teamMembersData.zh = eval(teamMembersMatch[1]);
+                }
+                if (teamMembersEnMatch) {
+                    teamMembersData.en = eval(teamMembersEnMatch[1]);
+                }
+                
+                renderTeamList();
+                alert('数据导入成功！');
+            } catch (e) {
+                alert('导入失败：' + e.message);
+            }
+        }
+
+        // 导入 i18n.js
+        function importI18nJs() {
+            const content = document.getElementById('importI18nJs').value;
+            try {
+                const translationsMatch = content.match(/const\s+translations\s*=\s*(\{[\s\S]*?\});/);
+                
+                if (translationsMatch) {
+                    i18nData = eval('(' + translationsMatch[1] + ')');
+                }
+                
+                renderI18nEditor();
+                alert('数据导入成功！');
+            } catch (e) {
+                alert('导入失败：' + e.message);
+            }
+        }
+
+        // 切换标签页
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + '-panel').classList.add('active');
+        }
+
+        // 切换语言
+        function switchLang(section, lang) {
+            currentLang[section] = lang;
+            const buttons = event.target.parentElement.querySelectorAll('.lang-tab');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (section === 'stats') {
+                renderStatsForm();
+            } else if (section === 'highlight') {
+                renderHighlightList();
+            } else if (section === 'news') {
+                renderNewsList();
+            } else if (section === 'announcement') {
+                renderAnnouncementList();
+            }
+        }
+
+        // 渲染团队列表
+        function renderTeamList() {
+            const container = document.getElementById('teamList');
+            const members = teamMembersData.zh;
+            
+            if (members.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#6b7280; padding:20px;">暂无成员数据，请添加或导入数据</p>';
+                return;
+            }
+            
+            container.innerHTML = members.map((member, index) => `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>${member.name} - ${member.position}</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-small" onclick="editMember(${index})">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteMember(${index})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <p><strong>部门：</strong>${member.departments.join(' | ')}</p>
+                    <p><strong>邮箱：</strong>${member.email}</p>
+                </div>
+            `).join('');
+        }
+
+        // 搜索团队
+        function searchTeam() {
+            const query = document.getElementById('teamSearch').value.toLowerCase();
+            const members = teamMembersData.zh;
+            const filtered = members.filter(m => 
+                m.name.toLowerCase().includes(query) ||
+                m.position.toLowerCase().includes(query) ||
+                m.departments.some(d => d.toLowerCase().includes(query))
+            );
+
+            const container = document.getElementById('teamList');
+            container.innerHTML = filtered.map((member, index) => {
+                const originalIndex = members.indexOf(member);
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>${member.name} - ${member.position}</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-primary btn-small" onclick="editMember(${originalIndex})">
+                                    <i class="fas fa-edit"></i> 编辑
+                                </button>
+                                <button class="btn btn-danger btn-small" onclick="deleteMember(${originalIndex})">
+                                    <i class="fas fa-trash"></i> 删除
+                                </button>
+                            </div>
+                        </div>
+                        <p><strong>部门：</strong>${member.departments.join(' | ')}</p>
+                        <p><strong>邮箱：</strong>${member.email}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 打开添加成员模态框
+        function openAddMemberModal() {
+            currentEditingMember = null;
+            document.getElementById('memberModalTitle').textContent = '添加新成员';
+            document.getElementById('memberForm').reset();
+            document.getElementById('memberModal').classList.add('active');
+        }
+
+        // 编辑成员
+        function editMember(index) {
+            currentEditingMember = index;
+            const memberZh = teamMembersData.zh[index];
+            const memberEn = teamMembersData.en[index];
+
+            document.getElementById('memberModalTitle').textContent = '编辑成员';
+            
+            // 填充中文数据
+            document.getElementById('memberNameZh').value = memberZh.name || '';
+            document.getElementById('memberPositionZh').value = memberZh.position || '';
+            document.getElementById('memberDepartmentsZh').value = memberZh.departments.join(' | ') || '';
+            document.getElementById('memberEmail').value = memberZh.email || '';
+            document.getElementById('memberImage').value = memberZh.image || '';
+            document.getElementById('memberEducationZh').value = memberZh.education || '';
+            document.getElementById('memberIntroductionZh').value = memberZh.introduction || '';
+            document.getElementById('memberAchievementsZh').value = memberZh.achievements || '';
+            document.getElementById('memberResponsibilitiesZh').value = memberZh.responsibilities || '';
+
+            // 填充英文数据
+            if (memberEn) {
+                document.getElementById('memberNameEn').value = memberEn.name || '';
+                document.getElementById('memberPositionEn').value = memberEn.position || '';
+                document.getElementById('memberDepartmentsEn').value = memberEn.departments.join(' | ') || '';
+                document.getElementById('memberEducationEn').value = memberEn.education || '';
+                document.getElementById('memberIntroductionEn').value = memberEn.introduction || '';
+                document.getElementById('memberAchievementsEn').value = memberEn.achievements || '';
+                document.getElementById('memberResponsibilitiesEn').value = memberEn.responsibilities || '';
+            }
+
+            document.getElementById('memberModal').classList.add('active');
+        }
+
+        // 删除成员
+        function deleteMember(index) {
+            if (confirm('确定要删除这个成员吗？')) {
+                teamMembersData.zh.splice(index, 1);
+                teamMembersData.en.splice(index, 1);
+                renderTeamList();
+            }
+        }
+
+        // 关闭成员模态框
+        function closeMemberModal() {
+            document.getElementById('memberModal').classList.remove('active');
+        }
+
+        // 切换成员表单语言
+        function switchMemberLang(lang) {
+            const buttons = event.target.parentElement.querySelectorAll('.lang-tab');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('memberFormZh').style.display = lang === 'zh' ? 'block' : 'none';
+            document.getElementById('memberFormEn').style.display = lang === 'en' ? 'block' : 'none';
+        }
+
+        // 保存成员
+        document.getElementById('memberForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const memberZh = {
+                name: document.getElementById('memberNameZh').value,
+                position: document.getElementById('memberPositionZh').value,
+                departments: document.getElementById('memberDepartmentsZh').value.split('|').map(d => d.trim()),
+                email: document.getElementById('memberEmail').value,
+                image: document.getElementById('memberImage').value,
+                education: document.getElementById('memberEducationZh').value,
+                introduction: document.getElementById('memberIntroductionZh').value,
+                achievements: document.getElementById('memberAchievementsZh').value,
+                responsibilities: document.getElementById('memberResponsibilitiesZh').value
+            };
+
+            const memberEn = {
+                name: document.getElementById('memberNameEn').value,
+                position: document.getElementById('memberPositionEn').value,
+                departments: document.getElementById('memberDepartmentsEn').value.split('|').map(d => d.trim()),
+                email: document.getElementById('memberEmail').value,
+                image: document.getElementById('memberImage').value,
+                education: document.getElementById('memberEducationEn').value,
+                introduction: document.getElementById('memberIntroductionEn').value,
+                achievements: document.getElementById('memberAchievementsEn').value,
+                responsibilities: document.getElementById('memberResponsibilitiesEn').value
+            };
+
+            if (currentEditingMember !== null) {
+                teamMembersData.zh[currentEditingMember] = memberZh;
+                teamMembersData.en[currentEditingMember] = memberEn;
+            } else {
+                teamMembersData.zh.push(memberZh);
+                teamMembersData.en.push(memberEn);
+            }
+
+            renderTeamList();
+            closeMemberModal();
+        });
+
+        // 渲染统计表单
+        function renderStatsForm() {
+            const lang = currentLang.stats;
+            const stats = achievementsData.stats[lang];
+            const container = document.getElementById('statsForm');
+
+            container.innerHTML = Object.entries(stats).map(([key, stat]) => `
+                <div class="card">
+                    <h4 style="margin-bottom: 15px; color: #1f2937;">${key}</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>数值</label>
+                            <input type="number" value="${stat.value}" 
+                                   onchange="updateStat('${lang}', '${key}', 'value', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>标签</label>
+                            <input type="text" value="${stat.label}" 
+                                   onchange="updateStat('${lang}', '${key}', 'label', this.value)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>详细描述</label>
+                        <input type="text" value="${stat.detail}" 
+                               onchange="updateStat('${lang}', '${key}', 'detail', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>图标类名（Font Awesome）</label>
+                        <input type="text" value="${stat.icon}" 
+                               onchange="updateStat('${lang}', '${key}', 'icon', this.value)">
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 更新统计数据
+        function updateStat(lang, key, field, value) {
+            if (field === 'value') {
+                achievementsData.stats[lang][key][field] = parseInt(value);
+            } else {
+                achievementsData.stats[lang][key][field] = value;
+            }
+        }
+
+        // 渲染代表性成果列表
+        function renderHighlightList() {
+            const lang = currentLang.highlight;
+            const highlights = achievementsData.highlights[lang];
+            const container = document.getElementById('highlightList');
+
+            if (highlights.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#6b7280; padding:20px;">暂无成果数据，请添加或导入数据</p>';
+                return;
+            }
+
+            container.innerHTML = highlights.map((item, index) => `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>${item.title}</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-small" onclick="editHighlight(${index})">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteHighlight(${index})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <p><strong>标签：</strong>${item.tag}</p>
+                    <p><strong>描述：</strong>${item.description}</p>
+                    <p><strong>作者：</strong>${item.author}</p>
+                    <p><strong>日期：</strong>${item.date}</p>
+                </div>
+            `).join('');
+        }
+
+        // 打开添加成果模态框
+        function openAddHighlightModal() {
+            currentEditingHighlight = null;
+            document.getElementById('highlightModalTitle').textContent = '添加代表性成果';
+            document.getElementById('highlightForm').reset();
+            document.getElementById('highlightModal').classList.add('active');
+        }
+
+        // 编辑成果
+        function editHighlight(index) {
+            currentEditingHighlight = index;
+            const highlightZh = achievementsData.highlights.zh[index];
+            const highlightEn = achievementsData.highlights.en[index];
+
+            document.getElementById('highlightModalTitle').textContent = '编辑代表性成果';
+            
+            // 填充中文数据
+            document.getElementById('highlightTagZh').value = highlightZh.tag || '';
+            document.getElementById('highlightTitleZh').value = highlightZh.title || '';
+            document.getElementById('highlightDescriptionZh').value = highlightZh.description || '';
+            document.getElementById('highlightAuthorZh').value = highlightZh.author || '';
+            document.getElementById('highlightDateZh').value = highlightZh.date || '';
+
+            // 填充英文数据
+            if (highlightEn) {
+                document.getElementById('highlightTagEn').value = highlightEn.tag || '';
+                document.getElementById('highlightTitleEn').value = highlightEn.title || '';
+                document.getElementById('highlightDescriptionEn').value = highlightEn.description || '';
+                document.getElementById('highlightAuthorEn').value = highlightEn.author || '';
+                document.getElementById('highlightDateEn').value = highlightEn.date || '';
+            }
+
+            document.getElementById('highlightModal').classList.add('active');
+        }
+
+        // 删除成果
+        function deleteHighlight(index) {
+            if (confirm('确定要删除这个成果吗？')) {
+                achievementsData.highlights.zh.splice(index, 1);
+                achievementsData.highlights.en.splice(index, 1);
+                renderHighlightList();
+            }
+        }
+
+        // 关闭成果模态框
+        function closeHighlightModal() {
+            document.getElementById('highlightModal').classList.remove('active');
+        }
+
+        // 切换成果表单语言
+        function switchHighlightLang(lang) {
+            const buttons = event.target.parentElement.querySelectorAll('.lang-tab');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('highlightFormZh').style.display = lang === 'zh' ? 'block' : 'none';
+            document.getElementById('highlightFormEn').style.display = lang === 'en' ? 'block' : 'none';
+        }
+
+        // 保存成果
+        document.getElementById('highlightForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const highlightZh = {
+                tag: document.getElementById('highlightTagZh').value,
+                title: document.getElementById('highlightTitleZh').value,
+                description: document.getElementById('highlightDescriptionZh').value,
+                author: document.getElementById('highlightAuthorZh').value,
+                date: document.getElementById('highlightDateZh').value
+            };
+
+            const highlightEn = {
+                tag: document.getElementById('highlightTagEn').value,
+                title: document.getElementById('highlightTitleEn').value,
+                description: document.getElementById('highlightDescriptionEn').value,
+                author: document.getElementById('highlightAuthorEn').value,
+                date: document.getElementById('highlightDateEn').value
+            };
+
+            if (currentEditingHighlight !== null) {
+                achievementsData.highlights.zh[currentEditingHighlight] = highlightZh;
+                achievementsData.highlights.en[currentEditingHighlight] = highlightEn;
+            } else {
+                achievementsData.highlights.zh.push(highlightZh);
+                achievementsData.highlights.en.push(highlightEn);
+            }
+
+            renderHighlightList();
+            closeHighlightModal();
+        });
+
+        // 渲染新闻列表
+        function renderNewsList() {
+            const lang = currentLang.news;
+            const news = achievementsData.news[lang];
+            const container = document.getElementById('newsList');
+
+            if (news.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#6b7280; padding:20px;">暂无动态数据，请添加或导入数据</p>';
+                return;
+            }
+
+            container.innerHTML = news.map((item, index) => `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>${item.title}</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-small" onclick="editNews(${index})">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteNews(${index})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <p><strong>日期：</strong>${item.date.month} ${item.date.day}</p>
+                    <p><strong>描述：</strong>${item.description}</p>
+                    ${item.link ? `<p><strong>链接：</strong><a href="${item.link}" target="_blank">${item.link}</a></p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // 打开添加新闻模态框
+        function openAddNewsModal() {
+            currentEditingNews = null;
+            document.getElementById('newsModalTitle').textContent = '添加最新动态';
+            document.getElementById('newsForm').reset();
+            document.getElementById('newsModal').classList.add('active');
+        }
+
+        // 编辑新闻
+        function editNews(index) {
+            currentEditingNews = index;
+            const newsZh = achievementsData.news.zh[index];
+            const newsEn = achievementsData.news.en[index];
+
+            document.getElementById('newsModalTitle').textContent = '编辑最新动态';
+            
+            // 填充中文数据
+            document.getElementById('newsDateDayZh').value = newsZh.date.day || '';
+            document.getElementById('newsDateMonthZh').value = newsZh.date.month || '';
+            document.getElementById('newsTitleZh').value = newsZh.title || '';
+            document.getElementById('newsDescriptionZh').value = newsZh.description || '';
+            document.getElementById('newsLink').value = newsZh.link || '';
+
+            // 填充英文数据
+            if (newsEn) {
+                document.getElementById('newsDateDayEn').value = newsEn.date.day || '';
+                document.getElementById('newsDateMonthEn').value = newsEn.date.month || '';
+                document.getElementById('newsTitleEn').value = newsEn.title || '';
+                document.getElementById('newsDescriptionEn').value = newsEn.description || '';
+            }
+
+            document.getElementById('newsModal').classList.add('active');
+        }
+
+        // 删除新闻
+        function deleteNews(index) {
+            if (confirm('确定要删除这条新闻吗？')) {
+                achievementsData.news.zh.splice(index, 1);
+                achievementsData.news.en.splice(index, 1);
+                renderNewsList();
+            }
+        }
+
+        // 关闭新闻模态框
+        function closeNewsModal() {
+            document.getElementById('newsModal').classList.remove('active');
+        }
+
+        // 切换新闻表单语言
+        function switchNewsLang(lang) {
+            const buttons = event.target.parentElement.querySelectorAll('.lang-tab');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('newsFormZh').style.display = lang === 'zh' ? 'block' : 'none';
+            document.getElementById('newsFormEn').style.display = lang === 'en' ? 'block' : 'none';
+        }
+
+        // 保存新闻
+        document.getElementById('newsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newsZh = {
+                date: {
+                    day: document.getElementById('newsDateDayZh').value,
+                    month: document.getElementById('newsDateMonthZh').value
+                },
+                title: document.getElementById('newsTitleZh').value,
+                description: document.getElementById('newsDescriptionZh').value,
+                link: document.getElementById('newsLink').value
+            };
+
+            const newsEn = {
+                date: {
+                    day: document.getElementById('newsDateDayEn').value,
+                    month: document.getElementById('newsDateMonthEn').value
+                },
+                title: document.getElementById('newsTitleEn').value,
+                description: document.getElementById('newsDescriptionEn').value,
+                link: document.getElementById('newsLink').value
+            };
+
+            if (currentEditingNews !== null) {
+                achievementsData.news.zh[currentEditingNews] = newsZh;
+                achievementsData.news.en[currentEditingNews] = newsEn;
+            } else {
+                achievementsData.news.zh.push(newsZh);
+                achievementsData.news.en.push(newsEn);
+            }
+
+            renderNewsList();
+            closeNewsModal();
+        });
+
+        // 渲染公告列表
+        function renderAnnouncementList() {
+            const lang = currentLang.announcement;
+            const announcements = announcementsData[lang];
+            const container = document.getElementById('announcementList');
+
+            if (announcements.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#6b7280; padding:20px;">暂无公告数据，请添加或导入数据</p>';
+                return;
+            }
+
+            container.innerHTML = announcements.map((item, index) => `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>${item.text}</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-small" onclick="editAnnouncement(${index})">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteAnnouncement(${index})">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    ${item.link ? `<p><strong>链接：</strong><a href="${item.link}" target="_blank">${item.link}</a></p>` : '<p><strong>类型：</strong>普通公告（无链接）</p>'}
+                    ${item.linkText ? `<p><strong>链接文字：</strong>${item.linkText}</p>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // 打开添加公告模态框
+        function openAddAnnouncementModal() {
+            currentEditingAnnouncement = null;
+            document.getElementById('announcementModalTitle').textContent = '添加公告';
+            document.getElementById('announcementForm').reset();
+            document.getElementById('announcementModal').classList.add('active');
+        }
+
+        // 编辑公告
+        function editAnnouncement(index) {
+            currentEditingAnnouncement = index;
+            const announcementZh = announcementsData.zh[index];
+            const announcementEn = announcementsData.en[index];
+
+            document.getElementById('announcementModalTitle').textContent = '编辑公告';
+            
+            // 填充中文数据
+            document.getElementById('announcementTextZh').value = announcementZh.text || '';
+            document.getElementById('announcementLinkZh').value = announcementZh.link || '';
+            document.getElementById('announcementLinkTextZh').value = announcementZh.linkText || '';
+
+            // 填充英文数据
+            if (announcementEn) {
+                document.getElementById('announcementTextEn').value = announcementEn.text || '';
+                document.getElementById('announcementLinkEn').value = announcementEn.link || '';
+                document.getElementById('announcementLinkTextEn').value = announcementEn.linkText || '';
+            }
+
+            document.getElementById('announcementModal').classList.add('active');
+        }
+
+        // 删除公告
+        function deleteAnnouncement(index) {
+            if (confirm('确定要删除这条公告吗？')) {
+                announcementsData.zh.splice(index, 1);
+                announcementsData.en.splice(index, 1);
+                renderAnnouncementList();
+            }
+        }
+
+        // 关闭公告模态框
+        function closeAnnouncementModal() {
+            document.getElementById('announcementModal').classList.remove('active');
+        }
+
+        // 切换公告表单语言
+        function switchAnnouncementLang(lang) {
+            const buttons = event.target.parentElement.querySelectorAll('.lang-tab');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('announcementFormZh').style.display = lang === 'zh' ? 'block' : 'none';
+            document.getElementById('announcementFormEn').style.display = lang === 'en' ? 'block' : 'none';
+        }
+
+        // 保存公告
+        document.getElementById('announcementForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const announcementZh = {
+                text: document.getElementById('announcementTextZh').value,
+                link: document.getElementById('announcementLinkZh').value,
+                linkText: document.getElementById('announcementLinkTextZh').value
+            };
+
+            const announcementEn = {
+                text: document.getElementById('announcementTextEn').value,
+                link: document.getElementById('announcementLinkEn').value,
+                linkText: document.getElementById('announcementLinkTextEn').value
+            };
+
+            if (currentEditingAnnouncement !== null) {
+                announcementsData.zh[currentEditingAnnouncement] = announcementZh;
+                announcementsData.en[currentEditingAnnouncement] = announcementEn;
+            } else {
+                announcementsData.zh.push(announcementZh);
+                announcementsData.en.push(announcementEn);
+            }
+
+            renderAnnouncementList();
+            closeAnnouncementModal();
+        });
+
+        // 渲染i18n编辑器
+        function renderI18nEditor() {
+            const container = document.getElementById('i18nEditor');
+            container.innerHTML = `
+                <div class="form-group">
+                    <label>中文配置 (JSON格式)</label>
+                    <textarea id="i18nZhJson" style="font-family: monospace; min-height: 300px;">${JSON.stringify(i18nData.zh, null, 2)}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>英文配置 (JSON格式)</label>
+                    <textarea id="i18nEnJson" style="font-family: monospace; min-height: 300px;">${JSON.stringify(i18nData.en, null, 2)}</textarea>
+                </div>
+                <button class="btn btn-primary" onclick="updateI18nData()">
+                    <i class="fas fa-save"></i> 更新配置
+                </button>
+            `;
+        }
+
+        // 更新i18n数据
+        function updateI18nData() {
+            try {
+                i18nData.zh = JSON.parse(document.getElementById('i18nZhJson').value);
+                i18nData.en = JSON.parse(document.getElementById('i18nEnJson').value);
+                alert('配置更新成功！');
+            } catch (e) {
+                alert('JSON格式错误：' + e.message);
+            }
+        }
+
+        // 导出所有代码
+        function exportAllCode() {
+            generateDataJs();
+            generateAchievementsJs();
+            generateI18nJs();
+            document.getElementById('exportModal').classList.add('active');
+        }
+
+        // 生成 data.js
+        function generateDataJs() {
+            const code = `// data.js - 团队成员数据（中英文）
+
+// 中文团队成员数据
+const teamMembers = ${JSON.stringify(teamMembersData.zh, null, 4)};
+
+// 英文团队成员数据
+const teamMembersEn = ${JSON.stringify(teamMembersData.en, null, 4)};`;
+
+            document.getElementById('dataJsOutput').textContent = code;
+        }
+
+        // 生成 achievements-data.js
+        function generateAchievementsJs() {
+            const code = `// achievements-data.js - 研究成果数据（中英文）
+
+// 中文研究成果统计数据
+const achievementsStats = ${JSON.stringify(achievementsData.stats.zh, null, 4)};
+
+// 英文研究成果统计数据
+const achievementsStatsEn = ${JSON.stringify(achievementsData.stats.en, null, 4)};
+
+// 中文代表性成果
+const highlightAchievements = ${JSON.stringify(achievementsData.highlights.zh, null, 4)};
+
+// 英文代表性成果
+const highlightAchievementsEn = ${JSON.stringify(achievementsData.highlights.en, null, 4)};
+
+// 中文最新动态数据
+const newsArticles = ${JSON.stringify(achievementsData.news.zh, null, 4)};
+
+// 英文最新动态数据
+const newsArticlesEn = ${JSON.stringify(achievementsData.news.en, null, 4)};
+
+// 中文公告数据
+const announcements = ${JSON.stringify(announcementsData.zh, null, 4)};
+
+// 英文公告数据
+const announcementsEn = ${JSON.stringify(announcementsData.en, null, 4)};`;
+
+            document.getElementById('achievementsJsOutput').textContent = code;
+        }
+
+        // 生成 i18n.js
+        function generateI18nJs() {
+            const code = `// i18n.js - 多语言配置
+
+const translations = ${JSON.stringify(i18nData, null, 4)};
+
+let currentLanguage = 'zh';
+
+function updateLanguage(lang) {
+    currentLanguage = lang;
+    // 添加您的语言切换逻辑
+}`;
+
+            document.getElementById('i18nJsOutput').textContent = code;
+        }
+
+        // 关闭导出模态框
+        function closeExportModal() {
+            document.getElementById('exportModal').classList.remove('active');
+        }
+
+        // 复制代码
+        function copyCode(elementId) {
+            const code = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('代码已复制到剪贴板！');
+            });
+        }
+
+        // 保存所有数据
+        function saveAllData() {
+            const allData = {
+                teamMembers: teamMembersData,
+                achievements: achievementsData,
+                announcements: announcementsData,
+                i18n: i18nData
+            };
+            
+            console.log('保存的数据：', allData);
+            alert('所有数据已保存！请点击"导出代码"按钮获取生成的代码文件。');
+        }
+
+        // 页面加载时初始化
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
